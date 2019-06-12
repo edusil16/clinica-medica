@@ -1,5 +1,7 @@
 import dao.PacienteDAO;
+import model.BeanUserFone;
 import model.Paciente;
+import model.Telefone;
 import org.junit.Test;
 
 import java.util.*;
@@ -56,6 +58,31 @@ public class TestaBancoJdbc {
             pacienteDAO.deletar(2l);
         } catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testeInsertTelefone(){
+
+        Telefone telefone = new Telefone();
+        telefone.setNumero("(21) 2409-5961");
+        telefone.setTipo("casa");
+        telefone.setPacientePessoa(String.valueOf(1L));
+
+        PacienteDAO paciente = new PacienteDAO();
+        paciente.salvarTelefone(telefone);
+    }
+
+    @Test
+    public void carregarDadosDoPaciente(){
+        PacienteDAO pacienteDAO = new PacienteDAO();
+
+        List<BeanUserFone> beanUserFones = pacienteDAO.listarTelPaciente(1);
+
+        for (BeanUserFone beanUserFone :
+             beanUserFones) {
+            System.out.println(beanUserFone);
+            System.out.println("----------------------------------");
         }
     }
 }

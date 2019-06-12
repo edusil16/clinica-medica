@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.BeanUserFone;
 import model.Paciente;
 import conexaoJDBC.ConexaoDB;
+import model.Telefone;
 
 public class PacienteDAO {
 
@@ -76,20 +78,69 @@ public class PacienteDAO {
         return buscaPaciente;
     }
 
-    public void deletar(Long id){
-        try{
+    public void deletar(Long id) {
+        try {
             String sql = "delete from paciente where pk_id_paciente = " + id;
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.execute();
             connection.commit();
-        } catch(Exception e){
-            try{
+        } catch (Exception e) {
+            try {
                 connection.rollback();
-            } catch(SQLException e1){
+            } catch (SQLException e1) {
                 e1.printStackTrace();
             }
         }
 
     }
+
+    public void salvarTelefone(Telefone telefone) {
+
+        try {
+
+            String sql = "insert into tel_paciente (numero, tipo, paciente_pessoa) values (?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, telefone.getNumero());
+            statement.setString(2, telefone.getTipo());
+            statement.setLong(3,telefone.getPacientePessoa());
+            statement.execute();
+            connection.commit();
+
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+    }
+
+    public List<BeanUserFone> listarTelPaciente(int pk_id_paciente){
+
+        List<BeanUserFone> beanUserFones = new ArrayList<BeanUserFone>();
+
+        String sql = "select nome, numero, observacao from tel_paciente as telefone\n" +
+                "inner join paciente as pacientes\n" +
+                "on telefone.paciente_pessoa = pacientes.pk_id_paciente\n" +
+                "where pacientes.pk_id_paciente = 1" + pk_id_paciente;
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultado = statement.executeQuery();
+
+            while (resultado.next()){
+                BeanUserFone userFone = new BeanUserFone();
+                userFone.setObservacao(resultado.getString("observacao"));
+                userFone.setNome(resultado.getString("nome"));
+                userFone.setNumero(resultado.getString("numero"));
+                beanUserFones.add(userFone);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return beanUserFones;
+    }
+
 
 }
