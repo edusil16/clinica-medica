@@ -50,7 +50,7 @@ public class PacienteDAO {
 
         while (resultado.next()) {
             Paciente paciente = new Paciente();
-            paciente.setPk_id_paciente(resultado.getInt("pk_id_paciente"));
+            paciente.setPk_id_paciente(resultado.getLong("pk_id_paciente"));
             paciente.setCpf(resultado.getString("cpf"));
             paciente.setNome(resultado.getString("nome"));
             paciente.setObservacao(resultado.getString("observacao"));
@@ -69,7 +69,7 @@ public class PacienteDAO {
         ResultSet resultado = statement.executeQuery();
 
         while (resultado.next()) {
-            buscaPaciente.setPk_id_paciente(resultado.getInt("pk_id_paciente"));
+            buscaPaciente.setPk_id_paciente(resultado.getLong("pk_id_paciente"));
             buscaPaciente.setCpf(resultado.getString("cpf"));
             buscaPaciente.setNome(resultado.getString("nome"));
             buscaPaciente.setObservacao(resultado.getString("observacao"));
@@ -116,14 +116,14 @@ public class PacienteDAO {
 
     }
 
-    public List<BeanUserFone> listarTelPaciente(int pk_id_paciente){
+    public List<BeanUserFone> listarTelPaciente(Long pk_id_paciente){
 
         List<BeanUserFone> beanUserFones = new ArrayList<BeanUserFone>();
 
-        String sql = "select nome, numero, observacao from tel_paciente as telefone\n" +
-                "inner join paciente as pacientes\n" +
-                "on telefone.paciente_pessoa = pacientes.pk_id_paciente\n" +
-                "where pacientes.pk_id_paciente = 1" + pk_id_paciente;
+        String sql = "select nome, numero, observacao from tel_paciente as telefone " +
+                "inner join paciente as pacientes " +
+                "on telefone.paciente_pessoa = pacientes.pk_id_paciente " +
+                "where pacientes.pk_id_paciente = " + pk_id_paciente;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultado = statement.executeQuery();
@@ -138,6 +138,7 @@ public class PacienteDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println("Error!!");
         }
         return beanUserFones;
     }

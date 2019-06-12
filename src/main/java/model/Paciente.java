@@ -2,16 +2,16 @@ package model;
 
 public class Paciente{
 
-    private Integer pk_id_paciente;
+    private Long pk_id_paciente;
     private String nome;
     private String cpf;
     private String observacao;
 
-    public Integer getPk_id_paciente() {
+    public Long getPk_id_paciente() {
         return pk_id_paciente;
     }
 
-    public void setPk_id_paciente(Integer pk_id_paciente) {
+    public void setPk_id_paciente(Long pk_id_paciente) {
         this.pk_id_paciente = pk_id_paciente;
     }
 
@@ -42,7 +42,7 @@ public class Paciente{
     @Override
     public String toString() {
         return "Paciente{" +
-                "id=" + pk_id_paciente +
+                "pk_id_paciente=" + pk_id_paciente +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", observacao='" + observacao + '\'' +

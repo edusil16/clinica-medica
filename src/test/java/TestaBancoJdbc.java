@@ -77,10 +77,9 @@ public class TestaBancoJdbc {
     public void carregarDadosDoPaciente(){
         PacienteDAO pacienteDAO = new PacienteDAO();
 
-        List<BeanUserFone> beanUserFones = pacienteDAO.listarTelPaciente(1);
+        List<BeanUserFone> beanUserFones = pacienteDAO.listarTelPaciente(1L);
 
-        for (BeanUserFone beanUserFone :
-             beanUserFones) {
+        for (BeanUserFone beanUserFone : beanUserFones) {
             System.out.println(beanUserFone);
             System.out.println("----------------------------------");
         }
