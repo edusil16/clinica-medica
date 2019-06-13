@@ -80,9 +80,11 @@ public class PacienteDAO {
 
     public void deletar(Long id) {
         try {
-            String sql = "delete from paciente where pk_id_paciente = " + id;
+            String sql = "delete from paciente where pk_id_paciente = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.execute();
+            preparedStatement.setLong(1, id);
+            deleteFonesPorPaciente(id); // chama o método deletar telefone do paciente.
+            preparedStatement.execute(); // executa a query depois de apagar o filho telefone.
             connection.commit();
         } catch (Exception e) {
             try {
@@ -138,10 +140,24 @@ public class PacienteDAO {
             }
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("Error!!");
         }
         return beanUserFones;
     }
 
-
+    public void deleteFonesPorPaciente(Long pk_id_paciente){
+        try {
+            String sqlFone = "delete from tel_paciente where paciente_pessoa = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlFone);
+            preparedStatement.setLong(1, pk_id_paciente);
+            preparedStatement.execute();
+            connection.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 }

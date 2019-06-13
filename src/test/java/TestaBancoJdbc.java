@@ -13,13 +13,24 @@ public class TestaBancoJdbc {
     public void salvarNoBanco() throws SQLException {
         PacienteDAO pacienteDAO = new PacienteDAO();
         Paciente paciente = new Paciente();
+        Paciente paciente1 = new Paciente();
+        Paciente paciente2 = new Paciente();
 
-          paciente.setCpf("145.985.698-47");
-          paciente.setNome("Clodoaldo Batista");
-          paciente.setObservacao("Dores musculares");
+        paciente.setCpf("145.985.698-47");
+        paciente.setNome("Clodoaldo Batista");
+        paciente.setObservacao("Dores musculares");
 
+        paciente1.setCpf("939.907.407.25");
+        paciente1.setNome("Lindalva Josefa");
+        paciente1.setObservacao("Dores de cabeça");
 
-            pacienteDAO.salvar(paciente);
+        paciente2.setCpf("132.916.697-38");
+        paciente2.setNome("Eduardo Santos");
+        paciente2.setObservacao("Dores abdominais");
+
+        pacienteDAO.salvar(paciente);
+        pacienteDAO.salvar(paciente1);
+        pacienteDAO.salvar(paciente2);
     }
 
     @Test
@@ -55,7 +66,7 @@ public class TestaBancoJdbc {
     public void iniciarDelete(){
         try{
             PacienteDAO pacienteDAO = new PacienteDAO();
-            pacienteDAO.deletar(2l);
+            pacienteDAO.deletar(5l);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -63,14 +74,10 @@ public class TestaBancoJdbc {
 
     @Test
     public void testeInsertTelefone(){
-
-        Telefone telefone = new Telefone();
-        telefone.setNumero("(21) 2409-5961");
-        telefone.setTipo("casa");
-        telefone.setPacientePessoa(String.valueOf(1L));
-
         PacienteDAO paciente = new PacienteDAO();
-        paciente.salvarTelefone(telefone);
+        for (Telefone telefone : telefones()) {
+            paciente.salvarTelefone(telefone);
+        }
     }
 
     @Test
@@ -83,5 +90,40 @@ public class TestaBancoJdbc {
             System.out.println(beanUserFone);
             System.out.println("----------------------------------");
         }
+    }
+
+    @Test
+    public void testaDelatarFone(){
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        pacienteDAO.deleteFonesPorPaciente(1L);
+    }
+
+    private List<Telefone> telefones(){
+        Telefone telefone = new Telefone();
+        Telefone telefone1 = new Telefone();
+        Telefone telefone2 = new Telefone();
+        Telefone telefone3 = new Telefone();
+        Telefone telefone4 = new Telefone();
+
+        telefone.setNumero("(21) 2409-5961");
+        telefone.setTipo("fixo");
+
+        telefone1.setNumero("(21) 3409-5961");
+        telefone1.setTipo("fixo");
+
+        telefone2.setNumero("(21)99781-5496");
+        telefone2.setTipo("celular");
+
+        telefone3.setNumero("(21) 3658-9568");
+        telefone3.setTipo("fixo");
+
+        telefone4.setNumero("(21) 9 6620-5855");
+        telefone4.setTipo("celular");
+
+        telefone1.setPacientePessoa(String.valueOf(5L));
+        telefone2.setPacientePessoa(String.valueOf(5L));
+        telefone3.setPacientePessoa(String.valueOf(6L));
+
+        return Arrays.asList(telefone, telefone1, telefone2, telefone3, telefone4);
     }
 }
