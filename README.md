@@ -1,6 +1,6 @@
 # clinica-medica 
-# projeto em  mvc e back-end com jdbc
 
-## Projeto criado para uma clinica médica
+## Projeto criado para uma clinica médica projeto em  mvc e back-end com jdbc.
+
 
 Autor: Eduardo Santos
