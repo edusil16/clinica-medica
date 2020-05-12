@@ -28,4 +28,5 @@ Para executar este projeto, você precisará ter os pacotes instalados:
 
 - Abra o programa e execute com o compilador da IDE.
 
+- Back da aplicação feito em Java para controlar um clinica médica, projeto feito para estudos.
 
