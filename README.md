@@ -26,6 +26,6 @@ Para executar este projeto, você precisará ter os pacotes instalados:
 
 - Faça o download do projeto.
 
-- Abra o programa e execute com o compilado da IDE.
+- Abra o programa e execute com o compilador da IDE.
 
 
